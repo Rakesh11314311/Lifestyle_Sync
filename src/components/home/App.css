@@ -1,0 +1,10 @@
+body {
+    background-color: #bcf6f8d7;
+}
+
+.Heading {
+    padding: 2rem 2rem;
+    background-color: rgb(78, 45, 178);
+    margin: 2rem 2rem;
+    border-radius: 20% 0% 20% 0%;
+}
