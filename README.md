@@ -1,4 +1,4 @@
-# React + TypeScript + Vite
+# React + TypeScript + ShadCN UI + Radix UI + Redux Store
 
 ## Run the following commands
 
