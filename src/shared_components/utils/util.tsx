@@ -1,8 +1,5 @@
-import DoughnutChart from '../../shared_components/doughnut_chart/doughnut_chart';
-import { useSelector } from 'react-redux'
-import type { RootState } from '../home/main';
-import type { ChartData } from 'chart.js';
-import type { finObject } from '../../states/finance-data/demo-data';
+import type { finObject } from "@/states/finance-data/demo-data";
+import type { ChartData } from "chart.js";
 
 const defaultColors = [
     'rgb(255, 99, 132)',    // Red
@@ -34,21 +31,3 @@ export function generateChartData(
     };
 }
 
-
-
-function Finance() {
-    const finance = useSelector((state: RootState) => state.finance);
-
-    return (
-        <>
-            <h1 className='Heading text-3xl font-bold'>Finance</h1>
-            <div className="bg-white rounded-xl shadow-md p-1 w-full max-w-md ml-5">
-                <DoughnutChart data={generateChartData(finance[0])} />
-            </div>
-            <div>
-            </div>
-        </>
-    )
-}
-
-export default Finance
