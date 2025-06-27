@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 
 export const cardList: { name: string; description: string; route: string }[] = [
     {
-        name: "Health",
-        description: "Track your daily Intake calories",
-        route: "/health",
-    },
-    {
         name: "Finance",
         description: "Track your monthly Financial Expenses",
         route: "/finance",
+    },
+    {
+        name: "Health",
+        description: "Track your daily Intake calories",
+        route: "/health",
     },
     {
         name: "Entertainment",
