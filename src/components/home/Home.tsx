@@ -8,14 +8,14 @@ export const cardList: { name: string; description: string; route: string }[] = 
         route: "/finance",
     },
     {
-        name: "Health",
-        description: "Track your daily Intake calories",
-        route: "/health",
-    },
-    {
         name: "Entertainment",
         description: "Weekend Entertainment Recommendations",
         route: "/entertainment",
+    },
+    {
+        name: "Health",
+        description: "Track your daily Intake calories",
+        route: "/health",
     },
 ];
 
