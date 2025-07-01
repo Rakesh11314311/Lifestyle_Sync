@@ -4,11 +4,13 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import { configureStore } from '@reduxjs/toolkit'
 import FinRed from '../../states/finance-data/finReducer.tsx'
+import EntertainRed from '../../states/entertainment-data/entertainReducer.tsx'
 import { Provider } from 'react-redux'
 
 const store = configureStore({
   reducer: {
-    finance: FinRed
+    finance: FinRed,
+    entertainment: EntertainRed
   }
 })
 
