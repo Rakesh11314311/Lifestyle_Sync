@@ -1,14 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { demoMovieList } from "./demo-data";
-import type { movieObject } from "./demo-data";
-
-const initialState: movieObject[] = demoMovieList;
+import type { movieObject } from "./types";
 
 const entertainSlice = createSlice({
     //following name will be the name will be how we get access to this slice "state.whatever_name_you_put_down_here"
     name: "entertainment",
-    initialState,
+    initialState: [] as movieObject[],
     //following will conatin reducer functions that will work on current state
     reducers: {
         addMovieEntry: (state, action: PayloadAction<movieObject>) => {

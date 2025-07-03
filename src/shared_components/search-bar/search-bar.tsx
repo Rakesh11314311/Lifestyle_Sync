@@ -1,6 +1,4 @@
 import { Input } from "@/components/ui/input";
-import { ChevronRightIcon } from "lucide-react"
-import { Button } from "@/components/ui/button"
 
 
 export default function SearchBar({ onKeyDown }: { onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void }) {
