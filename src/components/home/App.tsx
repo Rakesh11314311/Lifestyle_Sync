@@ -6,6 +6,7 @@ import FinanceInd from '../finance/finance-ind';
 import FinanceAdd from '../finance/finance-add';
 import NotFound from '../../shared_components/not_found/not_found';
 import Movie from '../entertainment/movie';
+import Health from '../health/health';
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
           <Route path='/finance/:id' element={<FinanceInd />}></Route>
           <Route path='/finance/:id/add' element={<FinanceAdd />}></Route>
           <Route path='/entertainment' element={<Movie />}></Route>
+          <Route path='/health' element={<Health />}></Route>
           <Route path='/not-found' element={<NotFound />}></Route>
         </Routes>
       </Router>
