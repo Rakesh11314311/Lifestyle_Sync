@@ -1,5 +1,7 @@
 # React + TypeScript + ShadCN UI + Radix UI + Redux Store
 
+# Please refer to API_SETUP.md to see how to get the required API keys
+
 ## Run the following commands
 
 ```js
