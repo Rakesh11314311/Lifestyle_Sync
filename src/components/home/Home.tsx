@@ -1,5 +1,6 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
+import Navbar from "../navbar/navbar";
 
 export const cardList: { name: string; description: string; route: string }[] = [
     {
@@ -22,7 +23,8 @@ export const cardList: { name: string; description: string; route: string }[] = 
 export default function Home() {
     return (
         <>
-            <div className="min-h-screen flex flex-col items-center justify-center py-12" style={{ backgroundColor: '#81b9d7' }}>
+            <Navbar />
+            <div className="min-h-screen flex flex-col items-center justify-center py-12 pt-12" style={{ backgroundColor: '#81b9d7' }}>
                 <h1 className="text-4xl font-bold mb-10 text-center">Hey There, What Do You Want to Focus on Today?</h1>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl px-4">
                     {cardList.map((card, index) => (

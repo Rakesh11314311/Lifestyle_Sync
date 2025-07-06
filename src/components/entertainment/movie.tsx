@@ -1,9 +1,11 @@
 import MovieCard from "./movie-card";
 import type { movieObject } from '../../states/entertainment-data/types';
-import { fetchAllMovieDetails, findMovie, findMovieDetails } from "./movie-find";
+import { fetchAllMovieDetails, findMovie } from "./movie-find";
 import { useEffect, useState } from "react";
 import { GENRE_MAP } from "./movie-find";
 import SearchBar from "@/shared_components/search-bar/search-bar";
+import Navbar from "../navbar/navbar";
+
 
 export default function Movie() {
     const [movies, setMovies] = useState<movieObject[]>([]);
@@ -60,7 +62,8 @@ export default function Movie() {
 
     return (
         <>
-            <div className="flex flex-col items-center justify-center w-full h-full">
+            <Navbar />
+            <div className="flex flex-col items-center justify-center w-full h-full mt-12">
                 <div className="w-[60%] h-full justify-center items-center">
                     <SearchBar value={searchText} onChange={handleSearchChange} onKeyDown={handleKeyDown} />
                 </div>
