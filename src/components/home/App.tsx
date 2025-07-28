@@ -7,7 +7,7 @@ import FinanceAdd from '../finance/finance-add';
 import NotFound from '../../shared_components/not_found/not_found';
 import Movie from '../entertainment/movie';
 import Health from '../health/health';
-import Layout from '../../shared_components/sidebar/layout';
+import Layout from '../../shared_components/layout/layout';
 
 function App() {
 
