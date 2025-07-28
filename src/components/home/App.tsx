@@ -7,23 +7,25 @@ import FinanceAdd from '../finance/finance-add';
 import NotFound from '../../shared_components/not_found/not_found';
 import Movie from '../entertainment/movie';
 import Health from '../health/health';
+import Layout from '../../shared_components/sidebar/layout';
 
 function App() {
 
   return (
     <>
-      <Router>
-        <Routes>
-          <Route path='/' element={<Home />}></Route>
-          <Route path='/finance' element={<Finance />}></Route>
-          <Route path='/finance/:id' element={<FinanceInd />}></Route>
-          <Route path='/finance/:id/add' element={<FinanceAdd />}></Route>
-          <Route path='/entertainment' element={<Movie />}></Route>
-          <Route path='/health' element={<Health />}></Route>
-          <Route path='/not-found' element={<NotFound />}></Route>
-        </Routes>
-      </Router>
-
+      <Layout>
+        <Router>
+          <Routes>
+            <Route path='/' element={<Home />}></Route>
+            <Route path='/finance' element={<Finance />}></Route>
+            <Route path='/finance/:id' element={<FinanceInd />}></Route>
+            <Route path='/finance/:id/add' element={<FinanceAdd />}></Route>
+            <Route path='/entertainment' element={<Movie />}></Route>
+            <Route path='/health' element={<Health />}></Route>
+            <Route path='/not-found' element={<NotFound />}></Route>
+          </Routes>
+        </Router>
+      </Layout>
     </>
   )
 }
