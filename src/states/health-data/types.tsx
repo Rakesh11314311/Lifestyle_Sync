@@ -21,22 +21,22 @@ export type Nutrients = {
 export const demoFoodItems = [
     // "1 glass of toned milk",
     // "2 slices of brown bread with peanut butter",
-    "1 banana",
+    // "1 banana",
 
     // "1 bowl of mixed fruit salad",
     // "1 cup of green tea",
 
     // "2 rotis made with wheat flour",
     // "1 bowl of dal (lentils)",
-    "1 bowl of vegetable curry (mixed veg)",
-    "1 small bowl of rice",
+    ////"1 bowl of vegetable curry (mixed veg)",
+    ////"1 small bowl of rice",
     // "1 bowl of curd",
 
     // "1 handful of almonds and walnuts",
     // "1 cup of masala chai with less sugar",
 
-    "2 rotis",
-    "1 serving of paneer curry",
+    ////"2 rotis",
+    ////"1 serving of paneer curry",
     // "1 small bowl of salad (cucumber, tomato, onion)",
     // "1 glass of buttermilk",
     // "1 piece of jaggery"

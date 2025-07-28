@@ -8,7 +8,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Plus } from 'lucide-react';
 import { generateTextInsights } from './functionalities';
 import { generateChartData } from '../../shared_components/utils/util';
-import Navbar from '../navbar/navbar';
 
 function FinanceInd() {
     const finance = useSelector((state: RootState) => state.finance);
@@ -57,7 +56,6 @@ function FinanceInd() {
     if (isValidId && !finEntry) {
         return (
             <>
-                <Navbar />
                 <Card className="w-full max-w-4xl mx-auto my-8">
                     <CardHeader>
                         <CardTitle>Monthly Finance Overview</CardTitle>
@@ -94,8 +92,7 @@ function FinanceInd() {
 
     return (
         <>
-            <Navbar />
-            <Card className="w-full max-w-4xl mx-auto mt-24">
+            <Card className="w-full max-w-4xl mx-auto">
                 <CardHeader>
                     <CardTitle>Monthly Finance Overview</CardTitle>
                     <CardDescription>
