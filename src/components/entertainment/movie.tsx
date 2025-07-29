@@ -60,25 +60,23 @@ export default function Movie() {
     };
 
     return (
-        <>
-            <div className="flex flex-col items-center justify-center w-full h-full">
-                <div className="w-[60%] h-full justify-center items-center">
-                    <SearchBar value={searchText} onChange={handleSearchChange} onKeyDown={handleKeyDown} />
-                </div>
-
-                <div>
-                    {(movies.length === 0) && <div className="flex flex-col items-center justify-center w-full h-full pt-30">
-                        <h1 className="text-2xl font-bold">No movies found yet</h1>
-                    </div>}
-
-
-                    {(movies.length > 0) && <div className="flex flex-col items-center justify-center w-full h-full pt-30">
-                        {movies.map((movie: movieObject) => (
-                            <MovieCard key={movie.title} image={movie.image} title={movie.title} rating={movie.rating} genre={movie.genre.join(", ")} budget={movie.budget.toString()} collection={movie.collection.toString()} />
-                        ))}
-                    </div>}
-                </div>
+        <div className="flex flex-col mx-auto items-center justify-center w-full h-full">
+            <div className="w-[60%] h-full justify-center items-center">
+                <SearchBar value={searchText} onChange={handleSearchChange} onKeyDown={handleKeyDown} />
             </div>
-        </>
+
+            <div>
+                {(movies.length === 0) && <div className="flex flex-col items-center justify-center w-full h-full pt-30">
+                    <h1 className="text-2xl font-bold">No movies found yet</h1>
+                </div>}
+
+
+                {(movies.length > 0) && <div className="flex flex-col items-center justify-center w-full h-full pt-30">
+                    {movies.map((movie: movieObject) => (
+                        <MovieCard key={movie.title} image={movie.image} title={movie.title} rating={movie.rating} genre={movie.genre.join(", ")} budget={movie.budget.toString()} collection={movie.collection.toString()} />
+                    ))}
+                </div>}
+            </div>
+        </div>
     );
 }

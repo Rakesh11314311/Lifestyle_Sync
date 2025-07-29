@@ -1,4 +1,4 @@
-import { HeartPulse, PiggyBank, Tv } from "lucide-react"
+import { HeartPulse, HandCoins, Tv } from "lucide-react"
 
 import {
     Sidebar,
@@ -16,7 +16,7 @@ const items = [
     {
         title: "Finance",
         url: "/#/finance",
-        icon: PiggyBank,
+        icon: HandCoins,
     },
     {
         title: "Health",

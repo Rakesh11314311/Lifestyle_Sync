@@ -26,7 +26,7 @@ const nutrientDisplayNames: Record<string, string> = {
 
 export function NutrientsTable({ nutrients }: NutrientsTableProps) {
     return (
-        <Table className="w-[40%] h-[80%] bg-white rounded-lg shadow-lg">
+        <Table className="w-[40%] h-[80%] mx-auto bg-white rounded-lg shadow-lg">
             <TableHeader>
                 <TableRow className="border-b-2 border-black">
                     <TableHead className="border-r-2 border-black">Nutrient</TableHead>

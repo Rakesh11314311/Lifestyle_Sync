@@ -55,38 +55,36 @@ function FinanceInd() {
     // If ID is valid but no data exists, show the "No data available" message
     if (isValidId && !finEntry) {
         return (
-            <>
-                <Card className="w-full max-w-4xl mx-auto my-8">
-                    <CardHeader>
-                        <CardTitle>Monthly Finance Overview</CardTitle>
-                        <CardDescription>
-                            {new Date(year!, month! - 1).toLocaleDateString('en-US', {
-                                month: 'long',
-                                year: 'numeric'
-                            })}
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="flex flex-col items-center justify-center py-16 space-y-6">
-                            <div className="text-center space-y-4">
-                                <div className="w-24 h-24 mx-auto bg-muted rounded-full flex items-center justify-center">
-                                    <Plus className="w-12 h-12 text-muted-foreground" />
-                                </div>
-                                <div>
-                                    <h3 className="text-xl font-semibold mb-2">No data available for this month</h3>
-                                    <p className="text-muted-foreground">
-                                        Start tracking your expenses by adding data for this month.
-                                    </p>
-                                </div>
+            <Card className="w-full max-w-4xl mx-auto my-8">
+                <CardHeader>
+                    <CardTitle>Monthly Finance Overview</CardTitle>
+                    <CardDescription>
+                        {new Date(year!, month! - 1).toLocaleDateString('en-US', {
+                            month: 'long',
+                            year: 'numeric'
+                        })}
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <div className="flex flex-col items-center justify-center py-16 space-y-6">
+                        <div className="text-center space-y-4">
+                            <div className="w-24 h-24 mx-auto bg-muted rounded-full flex items-center justify-center">
+                                <Plus className="w-12 h-12 text-muted-foreground" />
                             </div>
-                            <Button onClick={handleAddData} className="flex items-center gap-2">
-                                <Plus className="w-4 h-4" />
-                                Add Data for This Month
-                            </Button>
+                            <div>
+                                <h3 className="text-xl font-semibold mb-2">No data available for this month</h3>
+                                <p className="text-muted-foreground">
+                                    Start tracking your expenses by adding data for this month.
+                                </p>
+                            </div>
                         </div>
-                    </CardContent>
-                </Card>
-            </>
+                        <Button onClick={handleAddData} className="flex items-center gap-2">
+                            <Plus className="w-4 h-4" />
+                            Add Data for This Month
+                        </Button>
+                    </div>
+                </CardContent>
+            </Card>
         );
     }
 
