@@ -11,9 +11,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 {/* Content Area */}
                 <div className="flex flex-col flex-1 min-w-0">
                     <Header />
-                    <main className="flex-1 overflow-y-auto bg-[#81b9d7]">
-                        {children}
-                    </main>
+
+                    <div className="flex-1 overflow-auto bg-[#81b9d7]">
+                        <main className="flex flex-1 items-center justify-center overflow-y-auto bg-[#81b9d7]">
+                            {children}
+                        </main>
+                    </div>
                 </div>
             </div>
         </SidebarProvider>

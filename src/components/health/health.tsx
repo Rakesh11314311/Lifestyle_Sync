@@ -16,9 +16,7 @@ export default function Health() {
 
     return (
         <>
-            <div className="flex flex-col items-center justify-center h-screen" style={{ backgroundColor: '#81b9d7' }}>
-                {nutritionData && <NutrientsTable nutrients={nutritionData} />}
-            </div>
+            {nutritionData && <NutrientsTable nutrients={nutritionData} />}
         </>
     );
 }
