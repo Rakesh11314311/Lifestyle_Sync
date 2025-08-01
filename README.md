@@ -6,14 +6,12 @@ A comprehensive lifestyle management application built with React, TypeScript, a
 
 ### 💰 Finance Management
 - Track monthly income and expenses
-- Categorize financial data
 - Visualize spending patterns with charts
 - Historical data analysis
 
 ### 🏥 Health Tracking
 - Monitor nutrition and health metrics
-- Track fitness activities
-- Health data visualization
+- Detailed list of intake of macro and micro nutrients
 
 ### 🎬 Entertainment
 - Movie tracking and recommendations
