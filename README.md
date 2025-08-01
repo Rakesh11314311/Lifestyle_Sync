@@ -1,4 +1,4 @@
-# 2_Lifestyle - Personal Lifestyle Management Application
+# Lifestyle Sync - Personal Lifestyle Management Application
 
 A comprehensive lifestyle management application built with React, TypeScript, and Node.js that helps users track and manage their finances, health, and entertainment activities.
 
@@ -23,7 +23,6 @@ A comprehensive lifestyle management application built with React, TypeScript, a
 - Responsive design with Tailwind CSS
 - Beautiful charts and visualizations
 - Intuitive navigation with sidebar
-- Mobile-friendly interface
 
 ## 🛠️ Tech Stack
 
@@ -34,7 +33,6 @@ A comprehensive lifestyle management application built with React, TypeScript, a
 - **Tailwind CSS** - Styling
 - **Redux Toolkit** - State management
 - **React Router** - Navigation
-- **Chart.js** - Data visualization
 - **Radix UI** - UI components
 
 ### Backend
@@ -58,7 +56,7 @@ Before running this project, make sure you have the following installed:
 
 ```bash
 git clone <your-repository-url>
-cd 2_Lifestyle
+cd Lifestyle_Sync
 ```
 
 ### 2. Install Frontend Dependencies
@@ -84,11 +82,6 @@ Make sure MongoDB is running on your system:
 # Start MongoDB service
 mongod
 ```
-
-**Or use MongoDB Atlas (cloud):**
-- Create a free account at [MongoDB Atlas](https://www.mongodb.com/atlas)
-- Create a cluster and get your connection string
-- Update the connection string in `1_server/index.js`
 
 ### 5. Configure Environment Variables
 
@@ -119,104 +112,6 @@ npm run dev
 ```
 
 The application will be available at `http://localhost:5173`
-
-## 📁 Project Structure
-
-```
-2_Lifestyle/
-├── 1_server/                 # Backend server
-│   ├── index.js             # Express server
-│   ├── models/              # MongoDB models
-│   └── package.json
-├── src/
-│   ├── components/          # Feature components
-│   │   ├── finance/        # Finance management
-│   │   ├── health/         # Health tracking
-│   │   ├── entertainment/   # Entertainment features
-│   │   └── home/           # Main app components
-│   ├── shared_components/   # Reusable components
-│   ├── states/             # Redux state management
-│   └── hooks/              # Custom React hooks
-├── public/                  # Static assets
-└── package.json            # Frontend dependencies
-```
-
-## 🎯 Available Scripts
-
-### Frontend Scripts
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
-
-### Backend Scripts
-- `node index.js` - Start the server
-
-## 🔧 Configuration
-
-### API Endpoints
-
-The backend provides the following endpoints:
-
-- `POST /finance/new` - Create new finance record
-- `POST /finance/get` - Get finance data by year/month
-- `POST /finance/latest` - Get latest finance record
-
-### Database Schema
-
-The application uses MongoDB with the following collections:
-- `finances` - Financial data storage
-
-## 🎨 Customization
-
-### Styling
-The project uses Tailwind CSS for styling. You can customize the design by modifying:
-- `src/global_components/global.css`
-- Tailwind configuration in `tailwind.config.js`
-
-### Components
-Reusable components are located in `src/shared_components/` and can be customized for your needs.
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🆘 Troubleshooting
-
-### Common Issues
-
-**MongoDB Connection Error:**
-- Ensure MongoDB is running
-- Check if the connection string is correct
-- Verify MongoDB is accessible on port 27017
-
-**Port Already in Use:**
-- Change the port in `1_server/index.js` (line 67)
-- Or kill the process using the port
-
-**CORS Issues:**
-- The backend is configured to allow requests from `http://localhost:5173`
-- Update the CORS configuration in `1_server/index.js` if needed
-
-**Build Errors:**
-- Clear node_modules and reinstall: `rm -rf node_modules && npm install`
-- Check TypeScript configuration in `tsconfig.json`
-
-## 📞 Support
-
-If you encounter any issues or have questions, please:
-1. Check the troubleshooting section above
-2. Search existing issues in the repository
-3. Create a new issue with detailed information
-
 ---
 
 **Happy coding! 🎉**
