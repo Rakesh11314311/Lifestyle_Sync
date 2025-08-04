@@ -19,7 +19,7 @@ function App() {
             <Route path='/' element={<Home />}></Route>
             <Route path='/finance' element={<Finance />}></Route>
             <Route path='/finance/:id' element={<FinanceInd />}></Route>
-            <Route path='/finance/add' element={<FinanceAdd header='Add Finance Data' />}></Route>
+            <Route path='/finance/:id/add' element={<FinanceAdd header='Add Finance Data' />}></Route>
             <Route path='/entertainment' element={<Movie />}></Route>
             <Route path='/health' element={<Health />}></Route>
             <Route path='/not-found' element={<NotFound />}></Route>

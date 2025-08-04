@@ -18,7 +18,7 @@ function FinanceInd() {
     let month: number | null = null;
     let year: number | null = null;
     let isValidId = false;
-    let entryExists = true;
+    const [entryExists, setEntryExists] = useState(true);
 
     if (id) {
         const match = id.match(/^(\d{2})-(\d{4})$/);
@@ -36,15 +36,12 @@ function FinanceInd() {
     useEffect(() => {
         axios.get(`http://localhost:5000/finance/get?year=${year}&month=${month}`)
             .then(res => {
-                if (res.data) {
-                    setFinEntry(res.data);
-                } else {
-                    navigate('/finance/add', { state: { header: 'Add finance data for this month' } });
-                }
+                setFinEntry(res.data);
+                setEntryExists(true);
             })
             .catch(err => {
                 console.log("setting entryExists to false");
-                entryExists = false;
+                setEntryExists(false);
                 console.log(err);
             })
     }, [id]);
@@ -70,6 +67,8 @@ function FinanceInd() {
     };
 
     // If ID is valid but no data exists, show the "No data available" message
+    console.log("isValidId: ", isValidId);
+    console.log("entryExists: ", entryExists);
     if (isValidId && !entryExists) {
         return (
             <Card className="w-full max-w-4xl mx-auto my-8">
