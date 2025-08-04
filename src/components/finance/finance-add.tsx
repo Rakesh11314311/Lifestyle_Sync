@@ -85,7 +85,7 @@ function FinanceAdd({ header }: FinanceAddProps) {
 
         axios.post('http://localhost:5000/finance/new', { year, month, total, data: validExpenses })
             .then(() => {
-                navigate(`/finance/${month}-${year}`);
+                navigate(`/finance/${String(month).padStart(2, '0')}-${year}`);
             })
             .catch(err => console.log(err))
     };

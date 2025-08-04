@@ -34,24 +34,30 @@ app.get('/finance/latest', (req, res) => {
         .catch(err => res.status(500).json({ error: err.message }));
 });
 
-app.post('/finance/new', (req, res) => {
-    if (FinObject.findOne({ year: req.body.year, month: req.body.month })) {
-        res.json('Finance object already exists')
-    } else {
-        FinObject.create({
+app.post('/finance/new', async (req, res) => {
+    try {
+        const existing = await FinObject.findOne({ year: req.body.year, month: req.body.month });
+        if (existing) {
+            return res.json('Finance object already exists');
+        }
+
+        const finObject = await FinObject.create({
             year: req.body.year,
             month: req.body.month,
             total: req.body.total,
             data: req.body.data
-        })
-            .then(finObject => res.json(finObject))
-            .catch(err => res.json(err))
+        });
+
+        res.json(finObject);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
-})
+});
+
 
 app.get('/finance/get', (req, res) => {
     const { year, month } = req.query
-    FinObject.findOne({ year: year, month: month })
+    FinObject.findOne({ year: Number(year), month: Number(month) })
         .then(finObject => {
             if (finObject) {
                 res.json(finObject)
