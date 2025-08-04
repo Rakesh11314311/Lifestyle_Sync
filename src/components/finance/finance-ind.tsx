@@ -1,6 +1,4 @@
 import DoughnutChart from '../../shared_components/doughnut_chart/doughnut_chart';
-import { useSelector } from 'react-redux'
-import type { RootState } from '../home/main';
 import InsightBox from '../../shared_components/insight-box/insight-box';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,22 +6,26 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Plus } from 'lucide-react';
 import { generateTextInsights } from './functionalities';
 import { generateChartData } from '../../shared_components/utils/util';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { type finObject } from '../../states/finance-data/demo-data';
 
 function FinanceInd() {
-    const finance = useSelector((state: RootState) => state.finance);
     const { id } = useParams();
     const navigate = useNavigate();
-
+    const [finEntry, setFinEntry] = useState<finObject | null>(null);
     // id is of the format mm-yyyy
     let month: number | null = null;
     let year: number | null = null;
     let isValidId = false;
+    let entryExists = true;
 
     if (id) {
         const match = id.match(/^(\d{2})-(\d{4})$/);
         if (match) {
             month = parseInt(match[1], 10);
             year = parseInt(match[2], 10);
+            console.log("setting isValidId to true");
             isValidId = true;
         } else {
             navigate('/not-found');
@@ -31,15 +33,30 @@ function FinanceInd() {
         }
     }
 
-    // Find the index of the finance entry matching month and year
-    const idx = finance.findIndex(f => f.month === month && f.year === year);
-    const finEntry = idx !== -1 ? finance[idx] : null;
+    useEffect(() => {
+        axios.get(`http://localhost:5000/finance/get?year=${year}&month=${month}`)
+            .then(res => {
+                if (res.data) {
+                    setFinEntry(res.data);
+                } else {
+                    navigate('/finance/add', { state: { header: 'Add finance data for this month' } });
+                }
+            })
+            .catch(err => {
+                console.log("setting entryExists to false");
+                entryExists = false;
+                console.log(err);
+            })
+    }, [id]);
 
     // For navigation, get previous and next entries
-    const isFirst = idx <= 0;
-    const isLast = idx === finance.length - 1;
-    const prevId = !isFirst && finance[idx - 1] ? `${String(finance[idx - 1].month).padStart(2, '0')}-${finance[idx - 1].year}` : null;
-    const nextId = !isLast && finance[idx + 1] ? `${String(finance[idx + 1].month).padStart(2, '0')}-${finance[idx + 1].year}` : null;
+    const prevMonth = (month && month - 1 > 0) ? month - 1 : 12;
+    const prevId = `${String(prevMonth).padStart(2, '0')}-${(prevMonth === 12) ? (year || 0) - 1 : (year || 0)}`;
+    const nextMonth = (month && month + 1 < 13) ? month + 1 : 1;
+    const nextId = `${String(nextMonth).padStart(2, '0')}-${(nextMonth === 1) ? (year || 0) + 1 : (year || 0)}`;
+
+    console.log("qwerty prev and nxt : ", prevId, nextId);
+    console.log(finEntry);
 
     const handlePrev = () => {
         if (prevId) navigate(`/finance/${prevId}`);
@@ -53,7 +70,7 @@ function FinanceInd() {
     };
 
     // If ID is valid but no data exists, show the "No data available" message
-    if (isValidId && !finEntry) {
+    if (isValidId && !entryExists) {
         return (
             <Card className="w-full max-w-4xl mx-auto my-8">
                 <CardHeader>
@@ -117,10 +134,10 @@ function FinanceInd() {
                 </CardContent>
                 <CardFooter className="flex flex-col gap-2">
                     <div className="flex justify-center gap-4 w-full">
-                        <Button variant="secondary" onClick={handlePrev} disabled={isFirst} className="flex items-center gap-2">
+                        <Button variant="secondary" onClick={handlePrev} className="flex items-center gap-2">
                             <ArrowLeft className="w-4 h-4" /> Prev Month
                         </Button>
-                        <Button variant="secondary" onClick={handleNext} disabled={isLast} className="flex items-center gap-2">
+                        <Button variant="secondary" onClick={handleNext} className="flex items-center gap-2">
                             Next Month <ArrowRight className="w-4 h-4" />
                         </Button>
                     </div>
