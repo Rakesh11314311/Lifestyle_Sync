@@ -4,7 +4,7 @@ export default function MovieCard({ image, title, rating, genre, budget, collect
             <div className="flex items-center justify-center w-1/8 h-1/2">
                 <img src={image} alt={title} className="w-full h-full" />
             </div>
-            <div className="flex items-center justify-center w-full bg-white w-7/8 h-1/2 p-0  pr-8 rounded-lg">
+            <div className="flex items-center justify-center bg-white w-7/8 h-1/2 p-0  pr-8 rounded-lg">
                 <div className="flex w-1/2 items-left ml-0">
                     <h1 className="text-lg font-bold ml-10">{title}</h1>
                 </div>

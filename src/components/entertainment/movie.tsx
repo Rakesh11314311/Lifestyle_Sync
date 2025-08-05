@@ -66,15 +66,17 @@ export default function Movie() {
             </div>
 
             <div>
-                {(movies.length === 0) && <div className="flex flex-col items-center justify-center w-full h-full pt-30">
+                {(movies.length === 0) && <div className="flex flex-col items-center justify-center w-full h-full pt-8">
                     <h1 className="text-2xl font-bold">No movies found yet</h1>
                 </div>}
 
 
-                {(movies.length > 0) && <div className="flex flex-col items-center justify-center w-full h-full pt-30">
-                    {movies.map((movie: movieObject) => (
-                        <MovieCard key={movie.title} image={movie.image} title={movie.title} rating={movie.rating} genre={movie.genre.join(", ")} budget={movie.budget.toString()} collection={movie.collection.toString()} />
-                    ))}
+                {(movies.length > 0) && <div className="flex flex-col items-center justify-center w-full h-full pt-8">
+                    {movies
+                        .filter((movie: movieObject) => movie.image && movie.image.trim() !== "")
+                        .map((movie: movieObject) => (
+                            <MovieCard key={movie.title} image={movie.image} title={movie.title} rating={movie.rating} genre={movie.genre.join(", ")} budget={movie.budget.toString()} collection={movie.collection.toString()} />
+                        ))}
                 </div>}
             </div>
         </div>
