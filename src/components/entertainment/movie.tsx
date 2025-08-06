@@ -60,20 +60,20 @@ export default function Movie() {
     };
 
     return (
-        <div className="flex flex-col mx-auto items-center justify-center w-full h-full">
-            <div className="w-[60%] h-full justify-center items-center">
+        <div className="flex flex-col mx-auto items-center justify-center w-full h-full flex-shrink-0">
+            <div className="w-[60%] h-full justify-center items-center flex-shrink-0">
                 <SearchBar value={searchText} onChange={handleSearchChange} onKeyDown={handleKeyDown} />
             </div>
 
-            <div>
+            <div className="w-[100%] h-full justify-center flex-shrink-0">
                 {(movies.length === 0) && <div className="flex flex-col items-center justify-center w-full h-full pt-8">
                     <h1 className="text-2xl font-bold">No movies found yet</h1>
                 </div>}
 
 
-                {(movies.length > 0) && <div className="flex flex-col items-center justify-center w-full h-full pt-8">
+                {(movies.length > 0) && <div className="flex flex-wrap items-center justify-center w-full h-[100%] pt-8 flex-shrink-0">
                     {movies
-                        .filter((movie: movieObject) => movie.image && movie.image.trim() !== "")
+                        .filter((movie: movieObject) => (movie.image && movie.image.trim() !== "") && (movie.rating && Number(movie.rating) > 0) && (movie.genre.length > 0))
                         .map((movie: movieObject) => (
                             <MovieCard key={movie.title} image={movie.image} title={movie.title} rating={movie.rating} genre={movie.genre.join(", ")} budget={movie.budget.toString()} collection={movie.collection.toString()} />
                         ))}
