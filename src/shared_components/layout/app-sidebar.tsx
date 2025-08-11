@@ -19,14 +19,14 @@ const items = [
         icon: HandCoins,
     },
     {
-        title: "Health",
-        url: "/#/health",
-        icon: HeartPulse,
-    },
-    {
         title: "Entertainment",
         url: "/#/entertainment",
         icon: Tv,
+    },
+    {
+        title: "Health",
+        url: "/#/health",
+        icon: HeartPulse,
     },
 ]
 

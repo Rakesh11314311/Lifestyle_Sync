@@ -1,23 +1,26 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { addFinanceEntry } from '../../states/finance-data/finReducer';
-import type { finObject } from '../../states/finance-data/demo-data';
 import { Plus, Trash2, ArrowLeft } from 'lucide-react';
+import axios from 'axios'
 
 type ExpenseItem = {
     tag: string;
     amount: number;
 };
 
-function FinanceAdd() {
-    const dispatch = useDispatch();
+interface FinanceAddProps {
+    header: string;
+}
+
+function FinanceAdd({ header }: FinanceAddProps) {
     const navigate = useNavigate();
     const { id } = useParams();
+    const location = useLocation();
+    const cardHeader = location.state?.header || header;
 
     // Parse month and year from id (format: mm-yyyy)
     let month: number | null = null;
@@ -62,7 +65,7 @@ function FinanceAdd() {
         setTotal(sum);
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!month || !year) {
@@ -80,15 +83,11 @@ function FinanceAdd() {
             return;
         }
 
-        const financeEntry: finObject = {
-            year,
-            month,
-            total,
-            data: validExpenses
-        };
-
-        dispatch(addFinanceEntry(financeEntry));
-        navigate(`/finance/${id}`);
+        axios.post('http://localhost:5000/finance/new', { year, month, total, data: validExpenses })
+            .then(() => {
+                navigate(`/finance/${String(month).padStart(2, '0')}-${year}`);
+            })
+            .catch(err => console.log(err))
     };
 
     const handleBack = () => {
@@ -113,7 +112,7 @@ function FinanceAdd() {
                         <ArrowLeft className="w-4 h-4" />
                     </Button>
                     <div>
-                        <CardTitle>Add Finance Data</CardTitle>
+                        <CardTitle>{cardHeader}</CardTitle>
                         <CardDescription>
                             Add your expenses for {new Date(year, month - 1).toLocaleDateString('en-US', {
                                 month: 'long',

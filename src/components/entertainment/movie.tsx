@@ -4,6 +4,7 @@ import { fetchAllMovieDetails, findMovie } from "./movie-find";
 import { useEffect, useState } from "react";
 import { GENRE_MAP } from "./movie-find";
 import SearchBar from "@/shared_components/search-bar/search-bar";
+import { Loader2 } from "lucide-react";
 
 
 export default function Movie() {
@@ -60,21 +61,28 @@ export default function Movie() {
     };
 
     return (
-        <div className="flex flex-col mx-auto items-center justify-center w-full h-full">
-            <div className="w-[60%] h-full justify-center items-center">
+        <div className="flex flex-col mx-auto items-center justify-center w-full h-full flex-shrink-0">
+            <div className="w-[60%] h-full justify-center items-center flex-shrink-0">
                 <SearchBar value={searchText} onChange={handleSearchChange} onKeyDown={handleKeyDown} />
             </div>
 
-            <div>
-                {(movies.length === 0) && <div className="flex flex-col items-center justify-center w-full h-full pt-30">
-                    <h1 className="text-2xl font-bold">No movies found yet</h1>
+            <div className="w-[100%] h-full justify-center flex-shrink-0">
+                {(searchText === "") && <div className="flex flex-col items-center justify-center w-full h-full pt-8">
+                    <h1 className="text-2xl font-bold">Enter a phrase to start searching for movies</h1>
+                </div>}
+
+                {(searchText !== "") && (movies.length === 0) && <div className="flex flex-col items-center justify-center w-full h-full pt-8">
+                    <h1 className="text-2xl font-bold">Finding Movies named "{searchText}"</h1>
+                    <Loader2 className="animate-spin" />
                 </div>}
 
 
-                {(movies.length > 0) && <div className="flex flex-col items-center justify-center w-full h-full pt-30">
-                    {movies.map((movie: movieObject) => (
-                        <MovieCard key={movie.title} image={movie.image} title={movie.title} rating={movie.rating} genre={movie.genre.join(", ")} budget={movie.budget.toString()} collection={movie.collection.toString()} />
-                    ))}
+                {(movies.length > 0) && <div className="flex flex-wrap items-center justify-center w-full h-[100%] pt-8 flex-shrink-0">
+                    {movies
+                        .filter((movie: movieObject) => (movie.image && movie.image.trim() !== "") && ((movie.rating) && (Number(movie.rating) > 0) && (Number(movie.rating) <= 10)) && (movie.genre.length > 0))
+                        .map((movie: movieObject) => (
+                            <MovieCard id={movie.id} key={movie.title} image={movie.image} title={movie.title} rating={movie.rating} genre={movie.genre.join(", ")} budget={movie.budget.toString()} collection={movie.collection.toString()} />
+                        ))}
                 </div>}
             </div>
         </div>
