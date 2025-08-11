@@ -8,6 +8,7 @@ import NotFound from '../../shared_components/not_found/not_found';
 import Movie from '../entertainment/movie';
 import Health from '../health/health';
 import Layout from '../../shared_components/layout/layout';
+import MovieDetailPage from '../entertainment/movie-detail-page';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
             <Route path='/finance/:id' element={<FinanceInd />}></Route>
             <Route path='/finance/:id/add' element={<FinanceAdd header='Add Finance Data' />}></Route>
             <Route path='/entertainment' element={<Movie />}></Route>
+            <Route path='/entertainment/:id' element={<MovieDetailPage />}></Route>
             <Route path='/health' element={<Health />}></Route>
             <Route path='/not-found' element={<NotFound />}></Route>
           </Routes>

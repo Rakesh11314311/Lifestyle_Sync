@@ -1,3 +1,7 @@
+import type { TMDBMovie, MovieDetail } from "@/states/entertainment-data/types";
+const apiKey = import.meta.env.VITE_TMDB_API_KEY;
+import type { MovieDetailPageProps } from "./movie-detail-page";
+
 export const GENRE_MAP: { [key: number]: string } = {
     28: "Action",
     12: "Adventure",
@@ -21,9 +25,6 @@ export const GENRE_MAP: { [key: number]: string } = {
 };
 
 
-import type { TMDBMovie, MovieDetail } from "@/states/entertainment-data/types";
-const apiKey = import.meta.env.VITE_TMDB_API_KEY;
-
 //console.log("API KEY:", apiKey);
 
 export async function findMovie(movie: string): Promise<TMDBMovie[]> {
@@ -45,4 +46,57 @@ export async function fetchAllMovieDetails(movie_ids: number[]): Promise<MovieDe
     const allMovieDetails = await Promise.all(movie_ids.map(id => findMovieDetails(id)));
 
     return allMovieDetails;
+}
+
+export function minutesToHours(minutes: number): string {
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+    return (hours > 0) ? `${hours}h ${remainingMinutes}m` : `${remainingMinutes}m`;
+}
+
+export async function giveSingleMovieDetails(movie_id: number = 597): Promise<MovieDetailPageProps> {
+    const movieDetails = await fetch(`https://api.themoviedb.org/3/movie/${movie_id}?api_key=${apiKey}`);
+    const mv = await movieDetails.json();
+
+    return {
+        title: mv.title,
+        poster: `https://image.tmdb.org/t/p/w500${mv.poster_path}`,
+        rating: mv.vote_average,
+        genre: mv.genres.map((genre: { id: number; name: string }) => GENRE_MAP[genre.id]).join(', '),
+        budget: mv.budget,
+        collection: mv.revenue,
+        description: mv.overview,
+        tagline: mv.tagline,
+        year: mv.release_date.split("-")[0],
+        duration: minutesToHours(mv.runtime),
+    }
+}
+
+export async function giveCastCrew(movie_id: number = 597): Promise<any> {
+    const castCrew = await fetch(`https://api.themoviedb.org/3/movie/${movie_id}/credits?api_key=${apiKey}`);
+    const mv = await castCrew.json();
+
+    console.log("QWERTY***** : ", mv.cast.map(
+        (el: any) => {
+            return {
+                name: el.name,
+                picture: `https://image.tmdb.org/t/p/w500${el.profile_path}`,
+                role: el.character,
+            }
+        }
+    ));
+
+    return mv.cast.map(
+        (el: any) => {
+            return {
+                name: el.name,
+                picture: `https://image.tmdb.org/t/p/w500${el.profile_path}`,
+                role: el.character,
+            }
+        }
+    );
+}
+
+export function makeCommaSeparated(number: number): string {
+    return number.toLocaleString('en-US');
 }
