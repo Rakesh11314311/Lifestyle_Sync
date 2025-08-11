@@ -83,12 +83,28 @@ mongod
 
 ### 5. Configure Environment Variables
 
-Create a `.env` file in the root directory (optional for basic setup):
+Create a `.env` file in the root directory with the following variables:
 
 ```env
-VITE_API_URL=http://localhost:5000
-MONGODB_URI=mongodb://localhost:27017/Lifestyle
+# External API Keys
+VITE_TMDB_API_KEY=your_tmdb_api_key_here
+VITE_NUTRITIONIX_APP_ID=your_nutritionix_app_id_here
+VITE_NUTRITIONIX_APP_KEY=your_nutritionix_app_key_here
 ```
+
+#### Required API Keys
+
+To use all features of the application, you'll need to obtain the following API keys:
+
+1. **TMDB API Key** - For movie data and recommendations
+   - Visit [The Movie Database (TMDB)](https://www.themoviedb.org/settings/api)
+   - Create an account and request an API key
+   - Replace `your_tmdb_api_key_here` with your actual API key
+
+2. **Nutritionix API Credentials** - For nutrition and health data
+   - Visit [Nutritionix API](https://www.nutritionix.com/business/api)
+   - Sign up for an account to get your App ID and App Key
+   - Replace `your_nutritionix_app_id_here` and `your_nutritionix_app_key_here` with your actual credentials
 
 ## 🏃‍♂️ Running the Application
 
