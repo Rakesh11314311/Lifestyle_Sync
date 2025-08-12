@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const FinObject = require('./models/finance');
+const FavMovie = require('./models/fav-movies');
 const app = express();
 
 app.use(cors({
@@ -67,6 +68,60 @@ app.get('/finance/get', (req, res) => {
         })
         .catch(err => res.json(err))
 })
+
+app.post('/fav-movies/new', async (req, res) => {
+    try {
+        const existing = await FavMovie.findOne({ movieId: req.body.movieId });
+        if (existing) {
+            return res.json('Movie already in favourites');
+        }
+
+        const favMovie = await FavMovie.create({
+            movieId: req.body.movieId
+        });
+
+        res.json(favMovie);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post('/fav-movies/remove', async (req, res) => {
+    try {
+        if (!req.body.movieId) {
+            return res.status(400).json({ error: 'movieId is required' });
+        }
+
+        await FavMovie.deleteMany({ movieId: req.body.movieId });
+        res.json('Movie removed');
+    }
+    catch (err) {
+        console.error('Error removing movie:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post('/fav-movies/isfav', async (req, res) => {
+    try {
+        if (!req.body.movieId) {
+            return res.status(400).json({ error: 'movieId is required' });
+        }
+
+        const existingFav = await FavMovie.findOne({ movieId: req.body.movieId });
+        if (existingFav) {
+            console.log("Movie is in favourites");
+            return res.json(true);
+        }
+        else {
+            console.log("Movie is not in favourites");
+            return res.json(false);
+        }
+    }
+    catch (err) {
+        console.error('Error checking favorite status:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
 
 app.listen(5000, () => {
     console.log('Server is running on port 5000')

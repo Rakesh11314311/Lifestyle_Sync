@@ -81,7 +81,7 @@ export default function Movie() {
                     {movies
                         .filter((movie: movieObject) => (movie.image && movie.image.trim() !== "") && ((movie.rating) && (Number(movie.rating) > 0) && (Number(movie.rating) <= 10)) && (movie.genre.length > 0))
                         .map((movie: movieObject) => (
-                            <MovieCard id={movie.id} key={movie.title} image={movie.image} title={movie.title} rating={movie.rating} genre={movie.genre.join(", ")} budget={movie.budget.toString()} collection={movie.collection.toString()} />
+                            <MovieCard id={movie.id} key={movie.id} image={movie.image} title={movie.title} rating={movie.rating} genre={movie.genre.join(", ")} budget={movie.budget.toString()} collection={movie.collection.toString()} />
                         ))}
                 </div>}
             </div>
