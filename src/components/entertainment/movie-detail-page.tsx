@@ -128,23 +128,37 @@ export default function MovieDetailPage() {
 
                                         <div className='flex w-60 h-20 items-center justify-center p-2 bg-green-300 rounded-2xl border-3 border-gray-600 mt-5 ml-60'>
                                             <div className='flex w-full h-full items-center justify-center m-1 p-2 bg-blue-200 rounded-tl-2xl rounded-bl-2xl border-3 border-gray-600'>
-                                                <Heart
-                                                    size={48}
-                                                    fill={(isFav) ? "pink" : "white"}
-                                                    stroke="#4B5563"
-                                                    strokeWidth={1}
-                                                    className="transition-transform duration-200 hover:scale-110 hover:drop-shadow-lg"
-                                                    onClick={handleFav}
-                                                />
+                                                <Tooltip>
+                                                    <TooltipTrigger>
+                                                        <Heart
+                                                            size={48}
+                                                            fill={(isFav) ? "pink" : "white"}
+                                                            stroke="#4B5563"
+                                                            strokeWidth={1}
+                                                            className="transition-transform duration-200 hover:scale-110 hover:drop-shadow-lg"
+                                                            onClick={handleFav}
+                                                        />
+                                                    </TooltipTrigger>
+                                                    <TooltipContent>
+                                                        <p>{(isFav) ? "Remove from favourites" : "Add to favourites"}</p>
+                                                    </TooltipContent>
+                                                </Tooltip>
                                             </div>
                                             <div className='flex w-full h-full items-center justify-center m-1 p-2 bg-blue-200 rounded-tr-2xl rounded-br-2xl border-3 border-gray-600'>
-                                                <ListPlus
-                                                    size={48}
-                                                    fill="pink"
-                                                    stroke="#4B5563"
-                                                    strokeWidth={2}
-                                                    className="transition-transform duration-200 hover:scale-110 hover:drop-shadow-lg"
-                                                />
+                                                <Tooltip>
+                                                    <TooltipTrigger>
+                                                        <ListPlus
+                                                            size={48}
+                                                            fill="pink"
+                                                            stroke="#4B5563"
+                                                            strokeWidth={2}
+                                                            className="transition-transform duration-200 hover:scale-110 hover:drop-shadow-lg"
+                                                        />
+                                                    </TooltipTrigger>
+                                                    <TooltipContent>
+                                                        <p>Add to watchlist</p>
+                                                    </TooltipContent>
+                                                </Tooltip>
                                             </div>
                                         </div>
 
