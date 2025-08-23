@@ -125,6 +125,20 @@ app.post('/fav-movies/isfav', async (req, res) => {
     }
 });
 
+app.get('/food-data/latest', (req, res) => {
+    FoodIntake.findOne().sort({ year: -1, month: -1 })
+        .then(foodData => {
+            if (foodData) {
+                res.json(foodData);
+            } else {
+                res.status(404).json({
+                    message: 'Make your first food data object to get started'
+                });
+            }
+        })
+        .catch(err => res.status(500).json({ error: err.message }));
+});
+
 app.post('/food-data/new', async (req, res) => {
     const existingData = await FoodIntake.findOne({ year: req.body.year, month: req.body.month, day: req.body.day });
     if (existingData) {

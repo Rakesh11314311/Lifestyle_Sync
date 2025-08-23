@@ -35,7 +35,7 @@ export function NutrientsTable({ nutrients }: { nutrients: nutritionPair[] }) {
             </TableHeader>
             <TableBody>
                 {nutrients.map((nutrient) =>
-                    nutrient.amount !== undefined ? (
+                    nutrient.amount !== undefined && typeof nutrient.amount === 'number' ? (
                         <TableRow key={nutrient.nutrient} className="border-b-2 border-black">
                             <TableCell className="border-r-2 border-black">{nutrientDisplayNames[nutrient.nutrient] ?? nutrient.nutrient}</TableCell>
                             <TableCell>{nutrient.amount.toFixed(4)}</TableCell>
