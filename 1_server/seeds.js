@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Expense = require('./models/finance');
+const Expense = require('./models/finance/finance');
 
 mongoose.connect('mongodb://localhost:27017/Lifestyle', { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {

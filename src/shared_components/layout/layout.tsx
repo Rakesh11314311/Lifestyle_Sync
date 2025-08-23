@@ -3,8 +3,13 @@ import { AppSidebar } from "./app-sidebar";
 import Header from "../heading/header";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+    if (localStorage.getItem("sidebarState") === null) {
+        localStorage.setItem("sidebarState", "true");
+    }
+    const isSidebarOpen = localStorage.getItem("sidebarOpen") === "true";
+
     return (
-        <SidebarProvider>
+        <SidebarProvider defaultOpen={isSidebarOpen}>
             <div className="flex h-screen w-screen overflow-hidden">
                 <AppSidebar />
 

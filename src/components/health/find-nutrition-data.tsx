@@ -1,6 +1,6 @@
 const NUTRITIONIX_APP_ID = import.meta.env.VITE_NUTRITIONIX_APP_ID;
 const NUTRITIONIX_APP_KEY = import.meta.env.VITE_NUTRITIONIX_APP_KEY;
-import type { Nutrients } from "@/states/health-data/types";
+import type { Nutrients, nutritionPair } from "@/states/health-data/types";
 
 export async function fetchNutritionData(query: string): Promise<Nutrients> {
     const response = await fetch("https://trackapi.nutritionix.com/v2/natural/nutrients", {
@@ -40,6 +40,13 @@ export async function fetchNutritionData(query: string): Promise<Nutrients> {
         zinc: find(309),
     };
 };
+
+export function convertNutritionData(nutritionData: Nutrients): nutritionPair[] {
+    return Object.entries(nutritionData).map(([key, value]) => ({
+        nutrient: key,
+        amount: value ?? 0
+    }));
+}
 
 export async function fetchTotalNutrition(queries: string[]): Promise<Nutrients> {
     const allNutrients = await Promise.all(queries.map(query => fetchNutritionData(query)));

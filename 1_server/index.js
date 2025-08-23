@@ -1,8 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const FinObject = require('./models/finance');
-const FavMovie = require('./models/fav-movies');
+const FinObject = require('./models/finance/finance');
+const FavMovie = require('./models/entertainment/fav-movies');
+const FoodIntake = require('./models/health/food-intake');
+const NutritionData = require('./models/health/nutrition-data');
 const app = express();
 
 app.use(cors({
@@ -121,6 +123,58 @@ app.post('/fav-movies/isfav', async (req, res) => {
         console.error('Error checking favorite status:', err);
         res.status(500).json({ error: err.message });
     }
+});
+
+app.post('/food-data/new', async (req, res) => {
+    const existingData = await FoodIntake.findOne({ year: req.body.year, month: req.body.month, day: req.body.day });
+    if (existingData) {
+        return res.json('Food data already exists');
+    }
+
+    const foodData = await FoodIntake.create({
+        year: req.body.year,
+        month: req.body.month,
+        day: req.body.day,
+        items: req.body.items
+    });
+
+    res.json(foodData);
+});
+
+app.get('/food-data/get', async (req, res) => {
+    const foodData = await FoodIntake.find({ year: req.query.year, month: req.query.month, day: req.query.day });
+
+    if (!foodData.length) {
+        return res.status(404).json({ error: 'No food data found for this day' });
+    }
+
+    return res.json(foodData);
+});
+
+app.post('/nutrition-data/new', async (req, res) => {
+    const existingData = await NutritionData.findOne({ year: req.body.year, month: req.body.month, day: req.body.day });
+    if (existingData) {
+        return res.json('Nutrition data already exists');
+    }
+
+    const nutritionData = await NutritionData.create({
+        year: req.body.year,
+        month: req.body.month,
+        day: req.body.day,
+        items: req.body.items
+    });
+
+    res.json(nutritionData);
+});
+
+app.get('/nutrition-data/get', async (req, res) => {
+    const nutritionData = await NutritionData.find({ year: req.query.year, month: req.query.month, day: req.query.day });
+
+    if (!nutritionData.length) {
+        return res.status(404).json({ error: 'No nutrition data found for this day' });
+    }
+
+    return res.json(nutritionData);
 });
 
 app.listen(5000, () => {
