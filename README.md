@@ -12,6 +12,7 @@ A comprehensive lifestyle management application built with React, TypeScript, a
 ### 🏥 Health Tracking
 - Monitor nutrition and health metrics
 - Detailed list of intake of macro and micro nutrients
+- AI powered Daily Nutritional Intake Reviews
 
 ### 🎬 Entertainment
 - Movie tracking and recommendations
@@ -90,6 +91,7 @@ Create a `.env` file in the root directory with the following variables:
 VITE_TMDB_API_KEY=your_tmdb_api_key_here
 VITE_NUTRITIONIX_APP_ID=your_nutritionix_app_id_here
 VITE_NUTRITIONIX_APP_KEY=your_nutritionix_app_key_here
+VITE_COHERE_API_KEY=your_cohere_api_key_here
 ```
 
 #### Required API Keys
@@ -105,6 +107,11 @@ To use all features of the application, you'll need to obtain the following API 
    - Visit [Nutritionix API](https://www.nutritionix.com/business/api)
    - Sign up for an account to get your App ID and App Key
    - Replace `your_nutritionix_app_id_here` and `your_nutritionix_app_key_here` with your actual credentials
+
+3. **Cohere API Key** - For AI-powered movie reviews and insights
+   - Visit [Cohere AI](https://cohere.ai/)
+   - Sign up for an account and get your API key
+   - Replace `your_cohere_api_key_here` with your actual API key
 
 ## 🏃‍♂️ Running the Application
 
