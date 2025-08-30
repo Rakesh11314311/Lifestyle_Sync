@@ -5,7 +5,8 @@ import type { nutritionPair } from "@/states/health-data/types";
 import { NutrientsTable } from "./health-table";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "../ui/card";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
+import { getAIAgentReview } from "./find-nutrition-data";
 
 export default function HealthInd() {
     const { id } = useParams();
@@ -18,12 +19,16 @@ export default function HealthInd() {
     const [currentId, setCurrentId] = useState<string | null>(null);
     const [foodItems, setFoodItems] = useState<string[] | null>(null);
     const [nutritionData, setNutritionData] = useState<nutritionPair[] | null>(null);
+    const [aiAgentReview, setAiAgentReview] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         if (id !== currentId) {
             setFoodItems(null);
             setNutritionData(null);
+            setAiAgentReview(null);
             setCurrentId(id ?? null);
+            setIsLoading(true);
         }
     }, [id]);
 
@@ -58,6 +63,7 @@ export default function HealthInd() {
                     console.log("Ended up here in first half")
                     setNutritionData(res.data[0].items);
                     console.log("nutritionData state updated:", nutritionData);
+                    setIsLoading(false);
                 })
                 .catch(err => {
                     console.log("Ended up here")
@@ -66,12 +72,24 @@ export default function HealthInd() {
         }
     }, [currentId]);
 
-    // useEffect(() => {
-    //     console.log("foodItems state updated:", foodItems);
-    //     console.log("nutritionData state updated:", nutritionData);
-    // }, [foodItems, nutritionData]);
+    useEffect(() => {
+        // console.log("foodItems state updated:", foodItems);
+        // console.log("nutritionData state updated:", nutritionData);
 
-    if (foodItems === null || nutritionData === null) {
+        if (foodItems && nutritionData) {
+            getAIAgentReview(foodItems, nutritionData).then(res => {
+                setAiAgentReview(res);
+            });
+        }
+    }, [foodItems, nutritionData]);
+
+    if (isLoading) {
+        return (
+            <div className="flex flex-col items-center justify-center h-screen gap-4">
+                <div>Loading...</div>
+            </div>
+        );
+    } else if (foodItems === null || nutritionData === null) {
         return (
             <div className="flex flex-col items-center justify-center h-screen gap-4">
                 <div>No data found for this day, please add data by clicking the button below</div>
@@ -143,7 +161,7 @@ export default function HealthInd() {
                                     What You Ate on {id}
                                 </h1>
 
-                                <section className="border-2 border-gray-300 rounded-md p-4">
+                                <section className="border-2 border-gray-300 rounded-md p-4 max-h-[275px] overflow-y-auto">
                                     {foodItems && (
                                         <div className="space-y-2">
                                             {foodItems.map((item, index) => (
@@ -161,17 +179,24 @@ export default function HealthInd() {
                                     AI Agent's Review
                                 </h1>
 
-                                <section className="border-2 border-gray-300 rounded-md p-4">
-                                    {/* TODO: Add AI Agent's Review, following is a placeholder */}
-                                    ✅ Good balance of fiber and vitamins from the fruit salad.
-
-                                    🍵 Green tea provides antioxidants and helps with metabolism.
-
-                                    🌾 Wheat rotis and dal together form a complete protein source, which is great for vegetarians.
-
-                                    ⚖️ The meal is relatively low in fat and supports digestive health.
-
-                                    💡 You may consider adding a source of healthy fats (e.g., nuts or seeds) to make the meal more balanced.
+                                <section className="border-2 border-gray-300 rounded-md p-4 max-h-[275px] overflow-y-auto">
+                                    {
+                                        aiAgentReview === null ? (
+                                            <div className="space-y-2">
+                                                <div className="p-2 bg-gray-50 rounded">
+                                                    <Loader2 className="w-4 h-4 animate-spin" />
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <div className="space-y-2">
+                                                {aiAgentReview.split("\n").map((item, index) => (
+                                                    <div key={index} className="p-2 bg-gray-50 rounded">
+                                                        {item}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )
+                                    }
                                 </section>
                             </div>
                         </div>
