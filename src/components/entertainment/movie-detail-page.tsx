@@ -11,8 +11,10 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { ListPlus } from "lucide-react";
+import axios from 'axios'
 
 export interface MovieDetailPageProps {
+    id: number;
     title: string;
     poster: string;
     rating: number;
@@ -38,18 +40,62 @@ export default function MovieDetailPage() {
     const [isFav, setIsFav] = useState<boolean>(false);
 
     useEffect(() => {
-        const fetchData = async () => {
-            const data = await giveSingleMovieDetails(Number(movieId));
-            setMv(data);
+        if (mv === null) {
+            const fetchData = async () => {
+                const data = await giveSingleMovieDetails(Number(movieId));
+                setMv(data);
+            }
+            fetchData();
         }
-        fetchData();
 
-        const fetchCast = async () => {
-            const data = await giveCastCrew(Number(movieId));
-            setCastCrew(data);
+        if (castCrew === null) {
+            const fetchCast = async () => {
+                const data = await giveCastCrew(Number(movieId));
+                setCastCrew(data);
+            }
+            fetchCast();
         }
-        fetchCast();
     }, [])
+
+    useEffect(() => {
+        if (mv && mv.id) {
+            const fetchFav = async () => {
+                try {
+                    const data = await axios.post('http://localhost:5000/fav-movies/isfav', { movieId: mv.id })
+                    setIsFav(data.data)
+                } catch (error) {
+                    console.error('Error fetching favorite status:', error);
+                    setIsFav(false);
+                }
+            }
+            fetchFav();
+        }
+    }, [mv])
+
+    function handleFav() {
+        if (!!mv) {
+            if (!isFav) {
+                axios.post('http://localhost:5000/fav-movies/new', { movieId: mv.id })
+                    .then(() => {
+                        console.log("Added ", mv.title, " to Favourites.");
+                        setIsFav(true);
+                    })
+                    .catch(err => {
+                        console.error('Error adding to favorites:', err);
+                    })
+            }
+            else {
+                axios.post('http://localhost:5000/fav-movies/remove', { movieId: mv.id })
+                    .then(() => {
+                        console.log("Removed ", mv.title, " from Favourites.");
+                        setIsFav(false);
+                    })
+                    .catch(err => {
+                        console.error('Error removing from favorites:', err);
+                    })
+            }
+        }
+    }
 
     return (
         <div className="flex flex-col w-full h-full">
@@ -82,23 +128,37 @@ export default function MovieDetailPage() {
 
                                         <div className='flex w-60 h-20 items-center justify-center p-2 bg-green-300 rounded-2xl border-3 border-gray-600 mt-5 ml-60'>
                                             <div className='flex w-full h-full items-center justify-center m-1 p-2 bg-blue-200 rounded-tl-2xl rounded-bl-2xl border-3 border-gray-600'>
-                                                <Heart
-                                                    size={48}
-                                                    fill={(isFav) ? "pink" : "white"}
-                                                    stroke="#4B5563"
-                                                    strokeWidth={1}
-                                                    className="transition-transform duration-200 hover:scale-110 hover:drop-shadow-lg"
-                                                    onClick={() => { setIsFav(isFav => (!isFav)) }}
-                                                />
+                                                <Tooltip>
+                                                    <TooltipTrigger>
+                                                        <Heart
+                                                            size={48}
+                                                            fill={(isFav) ? "pink" : "white"}
+                                                            stroke="#4B5563"
+                                                            strokeWidth={1}
+                                                            className="transition-transform duration-200 hover:scale-110 hover:drop-shadow-lg"
+                                                            onClick={handleFav}
+                                                        />
+                                                    </TooltipTrigger>
+                                                    <TooltipContent>
+                                                        <p>{(isFav) ? "Remove from favourites" : "Add to favourites"}</p>
+                                                    </TooltipContent>
+                                                </Tooltip>
                                             </div>
                                             <div className='flex w-full h-full items-center justify-center m-1 p-2 bg-blue-200 rounded-tr-2xl rounded-br-2xl border-3 border-gray-600'>
-                                                <ListPlus
-                                                    size={48}
-                                                    fill="pink"
-                                                    stroke="#4B5563"
-                                                    strokeWidth={2}
-                                                    className="transition-transform duration-200 hover:scale-110 hover:drop-shadow-lg"
-                                                />
+                                                <Tooltip>
+                                                    <TooltipTrigger>
+                                                        <ListPlus
+                                                            size={48}
+                                                            fill="pink"
+                                                            stroke="#4B5563"
+                                                            strokeWidth={2}
+                                                            className="transition-transform duration-200 hover:scale-110 hover:drop-shadow-lg"
+                                                        />
+                                                    </TooltipTrigger>
+                                                    <TooltipContent>
+                                                        <p>Add to watchlist</p>
+                                                    </TooltipContent>
+                                                </Tooltip>
                                             </div>
                                         </div>
 

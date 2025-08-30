@@ -1,6 +1,9 @@
 const NUTRITIONIX_APP_ID = import.meta.env.VITE_NUTRITIONIX_APP_ID;
 const NUTRITIONIX_APP_KEY = import.meta.env.VITE_NUTRITIONIX_APP_KEY;
-import type { Nutrients } from "@/states/health-data/types";
+const COHERE_API_KEY = import.meta.env.VITE_COHERE_API_KEY;
+
+import type { Nutrients, nutritionPair } from "@/states/health-data/types";
+import { CohereClient } from "cohere-ai";
 
 export async function fetchNutritionData(query: string): Promise<Nutrients> {
     const response = await fetch("https://trackapi.nutritionix.com/v2/natural/nutrients", {
@@ -41,6 +44,13 @@ export async function fetchNutritionData(query: string): Promise<Nutrients> {
     };
 };
 
+export function convertNutritionData(nutritionData: Nutrients): nutritionPair[] {
+    return Object.entries(nutritionData).map(([key, value]) => ({
+        nutrient: key,
+        amount: value ?? 0
+    }));
+}
+
 export async function fetchTotalNutrition(queries: string[]): Promise<Nutrients> {
     const allNutrients = await Promise.all(queries.map(query => fetchNutritionData(query)));
 
@@ -73,4 +83,27 @@ export async function fetchTotalNutrition(queries: string[]): Promise<Nutrients>
     }
 
     return total;
+}
+
+//Following code is used to get the AI Agent's review of the nutrition data
+const cohere = new CohereClient({ token: `${COHERE_API_KEY}` });
+
+export async function getAIAgentReview(foodItems: string[], nutrients: nutritionPair[]): Promise<string> {
+    const response = await cohere.chat({
+        model: "command-r",
+        message: `
+            Here are today's foods: 
+                ${foodItems.map((item) => `- ${item}`).join("\n")}
+
+            Nutrients and their quantities in the above foods:
+                ${nutrients.map((item) => `${item.nutrient}: ${item.amount}g`).join("\n")}
+
+            Based on this, give me exactly 5 short, single-line suggestions or compliments.
+            Keep each under 15 words.
+        `
+    });
+
+    console.log("QWERTY***** AI Agent's Review:", response.text);
+
+    return response.text;
 }

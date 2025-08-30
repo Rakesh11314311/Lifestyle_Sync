@@ -59,6 +59,7 @@ export async function giveSingleMovieDetails(movie_id: number = 597): Promise<Mo
     const mv = await movieDetails.json();
 
     return {
+        id: movie_id,
         title: mv.title,
         poster: `https://image.tmdb.org/t/p/w500${mv.poster_path}`,
         rating: mv.vote_average,

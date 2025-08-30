@@ -1,3 +1,9 @@
+export type dayInfo = {
+    day: number;
+    month: number;
+    year: number;
+}
+
 export type Nutrients = {
     calories: number;
     protein: number;
@@ -18,6 +24,11 @@ export type Nutrients = {
     [key: string]: number | undefined;
 };
 
+export type nutritionPair = {
+    nutrient: string;
+    amount: number;
+}
+
 export const demoFoodItems = [
     // "1 glass of toned milk",
     // "2 slices of brown bread with peanut butter",
@@ -28,8 +39,8 @@ export const demoFoodItems = [
 
     // "2 rotis made with wheat flour",
     // "1 bowl of dal (lentils)",
-    ////"1 bowl of vegetable curry (mixed veg)",
-    ////"1 small bowl of rice",
+    // "1 bowl of vegetable curry (mixed veg)",
+    // "1 small bowl of rice",
     // "1 bowl of curd",
 
     // "1 handful of almonds and walnuts",

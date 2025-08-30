@@ -1,22 +1,32 @@
-import type { Nutrients } from "@/states/health-data/types";
-import { fetchTotalNutrition } from "./find-nutrition-data";
-import { useEffect, useState } from "react";
-import { NutrientsTable } from "./health-table";
-import { demoFoodItems } from "@/states/health-data/types";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Health() {
-    const [nutritionData, setNutritionData] = useState<Nutrients | null>(null);
+    const navigate = useNavigate();
+
     useEffect(() => {
         async function fetchNutrition() {
-            const data = await fetchTotalNutrition(demoFoodItems);
-            setNutritionData(data);
+            try {
+                const foodData = await axios.get('http://localhost:5000/food-data/latest');
+
+                const day = String(foodData.data.day).padStart(2, "0");
+                const month = String(foodData.data.month).padStart(2, "0");
+                const year = foodData.data.year;
+                const formattedDate = `${day}-${month}-${year}`;
+
+                navigate(`/health/${formattedDate}`);
+            } catch (error) {
+                console.error("Error fetching latest data:", error);
+            }
         }
         fetchNutrition();
-    }, []);
+    }, [navigate]);
 
+    // Return a loading state while navigating
     return (
-        <>
-            {nutritionData && <NutrientsTable nutrients={nutritionData} />}
-        </>
+        <div className="flex items-center justify-center h-screen">
+            <div>Loading latest health data...</div>
+        </div>
     );
 }

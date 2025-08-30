@@ -9,6 +9,8 @@ import Movie from '../entertainment/movie';
 import Health from '../health/health';
 import Layout from '../../shared_components/layout/layout';
 import MovieDetailPage from '../entertainment/movie-detail-page';
+import DailyDataAdd from '../health/daily-data-add';
+import HealthInd from '../health/health-ind';
 
 function App() {
 
@@ -24,6 +26,8 @@ function App() {
             <Route path='/entertainment' element={<Movie />}></Route>
             <Route path='/entertainment/:id' element={<MovieDetailPage />}></Route>
             <Route path='/health' element={<Health />}></Route>
+            <Route path='/health/:id' element={<HealthInd />}></Route>
+            <Route path='/health/:id/add' element={<DailyDataAdd />}></Route>
             <Route path='/not-found' element={<NotFound />}></Route>
           </Routes>
         </Router>
