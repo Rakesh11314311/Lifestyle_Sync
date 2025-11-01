@@ -90,7 +90,7 @@ const cohere = new CohereClient({ token: `${COHERE_API_KEY}` });
 
 export async function getAIAgentReview(foodItems: string[], nutrients: nutritionPair[]): Promise<string> {
     const response = await cohere.chat({
-        model: "command-r",
+        model: "command-r-08-2024",
         message: `
             Here are today's foods: 
                 ${foodItems.map((item) => `- ${item}`).join("\n")}
