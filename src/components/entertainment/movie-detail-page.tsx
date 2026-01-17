@@ -132,7 +132,7 @@ export default function MovieDetailPage() {
                                                     <TooltipTrigger>
                                                         <Heart
                                                             size={48}
-                                                            fill={(isFav) ? "pink" : "white"}
+                                                            fill={(isFav) ? "#E11D48" : "white"}
                                                             stroke="#4B5563"
                                                             strokeWidth={1}
                                                             className="transition-transform duration-200 hover:scale-110 hover:drop-shadow-lg"
@@ -156,7 +156,7 @@ export default function MovieDetailPage() {
                                                         />
                                                     </TooltipTrigger>
                                                     <TooltipContent>
-                                                        <p>Add to watchlist</p>
+                                                        <p>Add to a collection</p>
                                                     </TooltipContent>
                                                 </Tooltip>
                                             </div>
